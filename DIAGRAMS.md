@@ -488,6 +488,6 @@ graph LR
 | 6 | Offer Flow | Detail 13 tahapan proses tawar-menawar |
 
 ---
-
+Thank you for coming
 **Last Updated:** April 24, 2026  
 **File:** DIAGRAMS.md (persisten di workspace)
