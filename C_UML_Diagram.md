@@ -5,71 +5,70 @@ Dokumen ini menyajikan diagram UML untuk aplikasi BabePus: Use Case Diagram, Act
 ## 1. Use Case Diagram
 
 ```mermaid
-usecaseDiagram
-  actor Guest as G
-  actor Buyer as B
-  actor Seller as S
-  actor Admin as A
+actor Guest
+actor Buyer
+actor Seller
+actor Admin
 
-  G --> (Register)
-  G --> (Login)
-  G --> (Browse Products)
-  G --> (Search Products)
-  G --> (View Product Detail)
-  G --> (View Categories)
+Guest --> (Register)
+Guest --> (Login)
+Guest --> (Browse Products)
+Guest --> (Search Products)
+Guest --> (View Product Detail)
+Guest --> (View Categories)
 
-  B --> (Login)
-  B --> (View Profile)
-  B --> (Update Profile)
-  B --> (Upload Avatar)
-  B --> (Make Offer)
-  B --> (View My Offers)
-  B --> (Start Chat)
-  B --> (View Conversations)
-  B --> (Send Message)
-  B --> (Add to Wishlist)
-  B --> (Remove from Wishlist)
-  B --> (Create Review)
-  B --> (Create Report)
-  B --> (Request Email Verification)
-  B --> (Verify Email)
-  B --> (View Notifications)
-  B --> (Use Pricing Estimate)
+Buyer --> (View Profile)
+Buyer --> (Update Profile)
+Buyer --> (Upload Avatar)
+Buyer --> (Make Offer)
+Buyer --> (View My Offers)
+Buyer --> (Start Chat)
+Buyer --> (View Conversations)
+Buyer --> (Send Message)
+Buyer --> (Add to Wishlist)
+Buyer --> (Remove from Wishlist)
+Buyer --> (Create Review)
+Buyer --> (Create Report)
+Buyer --> (Request Email Verification)
+Buyer --> (Verify Email)
+Buyer --> (View Notifications)
+Buyer --> (Use Pricing Estimate)
 
-  S --> (Login)
-  S --> (View Profile)
-  S --> (Update Profile)
-  S --> (Upload Avatar)
-  S --> (Add Product)
-  S --> (Update Product)
-  S --> (Mark Product Sold)
-  S --> (Delete Product)
-  S --> (View My Products)
-  S --> (View Incoming Offers)
-  S --> (Accept Offer)
-  S --> (Reject Offer)
-  S --> (View Dashboard)
-  S --> (View Seller Analytics)
-  S --> (Start Chat)
-  S --> (View Conversations)
-  S --> (Send Message)
+Seller --> (View Profile)
+Seller --> (Update Profile)
+Seller --> (Upload Avatar)
+Seller --> (Add Product)
+Seller --> (Update Product)
+Seller --> (Mark Product Sold)
+Seller --> (Delete Product)
+Seller --> (View My Products)
+Seller --> (View Incoming Offers)
+Seller --> (Accept Offer)
+Seller --> (Reject Offer)
+Seller --> (View Dashboard)
+Seller --> (View Seller Analytics)
+Seller --> (Start Chat)
+Seller --> (View Conversations)
+Seller --> (Send Message)
 
-  A --> (Login)
-  A --> (View Admin Dashboard)
-  A --> (Manage Users)
-  A --> (Suspend User)
-  A --> (View Products)
-  A --> (View Reports)
-  A --> (Update Report Status)
+Admin --> (View Admin Dashboard)
+Admin --> (Manage Users)
+Admin --> (Suspend User)
+Admin --> (View Products)
+Admin --> (View Reports)
+Admin --> (Update Report Status)
 
-  (Make Offer) .> (Login) : requires
-  (Add Product) .> (Login) : requires
-  (View My Products) .> (Login) : requires
-  (View Incoming Offers) .> (Login) : requires
-  (View Dashboard) .> (Login) : requires
-  (View Admin Dashboard) .> (Login) : requires
-  (Create Review) .> (Login) : requires
-  (Create Report) .> (Login) : requires
+(Make Offer) ..> (Login) : <<include>>
+(Add Product) ..> (Login) : <<include>>
+(View My Products) ..> (Login) : <<include>>
+(View Incoming Offers) ..> (Login) : <<include>>
+(View Dashboard) ..> (Login) : <<include>>
+(View Admin Dashboard) ..> (Login) : <<include>>
+(Create Review) ..> (Login) : <<include>>
+(Create Report) ..> (Login) : <<include>>
+(Start Chat) ..> (Login) : <<include>>
+(Send Message) ..> (Login) : <<include>>
+(Add to Wishlist) ..> (Login) : <<include>>
 ```
 ## 2. Activity Diagram
 
