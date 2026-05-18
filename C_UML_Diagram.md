@@ -5,213 +5,72 @@ Dokumen ini menyajikan diagram UML untuk aplikasi BabePus: Use Case Diagram, Act
 ## 1. Use Case Diagram
 
 ```mermaid
-erDiagram
-    users {
-        bigint id PK
-        varchar full_name
-        varchar email UK
-        varchar password_hash
-        varchar phone
-        varchar campus
-        varchar faculty
-        varchar study_program
-        varchar student_id
-        varchar campus_email
-        enum role
-        varchar avatar_url
-        varchar bio
-        decimal rating_average
-        int rating_count
-        tinyint is_suspended
-        enum verification_status
-        datetime email_verified_at
-        varchar email_verification_token
-        datetime email_verification_expires_at
-        timestamp created_at
-        timestamp updated_at
-    }
+usecaseDiagram
+  actor Guest as G
+  actor Buyer as B
+  actor Seller as S
+  actor Admin as A
 
-    categories {
-        bigint id PK
-        varchar name
-        varchar slug UK
-        timestamp created_at
-        timestamp updated_at
-    }
+  G --> (Register)
+  G --> (Login)
+  G --> (Browse Products)
+  G --> (Search Products)
+  G --> (View Product Detail)
+  G --> (View Categories)
 
-    products {
-        bigint id PK
-        bigint seller_id FK
-        bigint category_id FK
-        varchar title
-        varchar slug UK
-        text description
-        decimal price
-        enum condition_label
-        varchar campus_location
-        varchar faculty
-        varchar image_url
-        enum status
-        int view_count
-        datetime sold_at
-        datetime deleted_at
-        timestamp created_at
-        timestamp updated_at
-    }
+  B --> (Login)
+  B --> (View Profile)
+  B --> (Update Profile)
+  B --> (Upload Avatar)
+  B --> (Make Offer)
+  B --> (View My Offers)
+  B --> (Start Chat)
+  B --> (View Conversations)
+  B --> (Send Message)
+  B --> (Add to Wishlist)
+  B --> (Remove from Wishlist)
+  B --> (Create Review)
+  B --> (Create Report)
+  B --> (Request Email Verification)
+  B --> (Verify Email)
+  B --> (View Notifications)
+  B --> (Use Pricing Estimate)
 
-    offers {
-        bigint id PK
-        bigint product_id FK
-        bigint buyer_id FK
-        bigint seller_id FK
-        decimal offer_price
-        varchar note
-        enum status
-        timestamp created_at
-        timestamp updated_at
-    }
+  S --> (Login)
+  S --> (View Profile)
+  S --> (Update Profile)
+  S --> (Upload Avatar)
+  S --> (Add Product)
+  S --> (Update Product)
+  S --> (Mark Product Sold)
+  S --> (Delete Product)
+  S --> (View My Products)
+  S --> (View Incoming Offers)
+  S --> (Accept Offer)
+  S --> (Reject Offer)
+  S --> (View Dashboard)
+  S --> (View Seller Analytics)
+  S --> (Start Chat)
+  S --> (View Conversations)
+  S --> (Send Message)
 
-    transactions {
-        bigint id PK
-        bigint offer_id FK UK
-        bigint product_id FK
-        bigint buyer_id FK
-        bigint seller_id FK
-        decimal final_price
-        enum status
-        enum escrow_status
-        datetime buyer_confirmed_at
-        datetime seller_confirmed_at
-        datetime payout_released_at
-        datetime completed_at
-        timestamp created_at
-        timestamp updated_at
-    }
+  A --> (Login)
+  A --> (View Admin Dashboard)
+  A --> (Manage Users)
+  A --> (Suspend User)
+  A --> (View Products)
+  A --> (View Reports)
+  A --> (Update Report Status)
 
-    reviews {
-        bigint id PK
-        bigint transaction_id FK UK
-        bigint reviewer_id FK
-        bigint seller_id FK
-        tinyint rating
-        tinyint communication_rating
-        tinyint item_accuracy_rating
-        tinyint meetup_rating
-        json tags
-        tinyint is_anonymous
-        varchar comment
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    reports {
-        bigint id PK
-        bigint reporter_id FK
-        enum target_type
-        bigint target_user_id FK
-        bigint target_product_id FK
-        varchar reason
-        varchar details
-        enum status
-        varchar admin_note
-        bigint reviewed_by FK
-        datetime reviewed_at
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    verifications {
-        bigint id PK
-        bigint user_id FK
-        varchar document_type
-        varchar document_number
-        varchar campus_email
-        enum status
-        varchar notes
-        bigint verified_by FK
-        datetime verified_at
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    wishlists {
-        bigint id PK
-        bigint user_id FK
-        bigint product_id FK
-        timestamp created_at
-    }
-
-    notifications {
-        bigint id PK
-        bigint user_id FK
-        varchar type
-        varchar title
-        varchar body
-        varchar action_url
-        datetime read_at
-        timestamp created_at
-    }
-
-    conversations {
-        bigint id PK
-        bigint product_id FK
-        bigint buyer_id FK
-        bigint seller_id FK
-        datetime last_message_at
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    messages {
-        bigint id PK
-        bigint conversation_id FK
-        bigint sender_id FK
-        varchar body
-        datetime read_at
-        timestamp created_at
-    }
-
-    escrow_events {
-        bigint id PK
-        bigint transaction_id FK
-        bigint actor_id FK
-        varchar event_type
-        varchar note
-        timestamp created_at
-    }
-
-    users ||--o{ products : "sells"
-    users ||--o{ offers : "makes_offers_as_buyer"
-    users ||--o{ offers : "receives_offers_as_seller"
-    users ||--o{ transactions : "buys"
-    users ||--o{ transactions : "sells"
-    users ||--o{ reviews : "writes_reviews"
-    users ||--o{ reviews : "receives_reviews"
-    users ||--o{ reports : "reports"
-    users ||--o{ reports : "reported"
-    users ||--o{ reports : "reviews_reports"
-    users ||--o{ verifications : "submits"
-    users ||--o{ verifications : "verifies"
-    users ||--o{ wishlists : "owns"
-    users ||--o{ notifications : "receives"
-    users ||--o{ conversations : "participates_as_buyer"
-    users ||--o{ conversations : "participates_as_seller"
-    users ||--o{ messages : "sends"
-    users ||--o{ escrow_events : "performs_actions"
-
-    categories ||--o{ products : "contains"
-
-    products ||--o{ offers : "receives"
-    products ||--o{ transactions : "used_in"
-    products ||--o{ wishlists : "saved_in"
-    products ||--o{ conversations : "discussed_in"
-
-    offers ||--|| transactions : "leads_to"
-    transactions ||--|| reviews : "evaluated_by"
-    conversations ||--o{ messages : "has"
-    transactions ||--o{ escrow_events : "logs"
+  (Make Offer) .> (Login) : requires
+  (Add Product) .> (Login) : requires
+  (View My Products) .> (Login) : requires
+  (View Incoming Offers) .> (Login) : requires
+  (View Dashboard) .> (Login) : requires
+  (View Admin Dashboard) .> (Login) : requires
+  (Create Review) .> (Login) : requires
+  (Create Report) .> (Login) : requires
 ```
-
 ## 2. Activity Diagram
 
 ```mermaid
