@@ -89,4 +89,4 @@ graph TD
 
   AG --> AP[Create notification ke pihak lain]
   AP --> AQ[User menerima notifikasi status escrow]
-```}
+```
